@@ -27,7 +27,7 @@ app.get('/', (req,res) => {
 app.post('/gementar/storage/upload', (req,res) => {
     upload(req,res,function(err) {
         if(err) {
-            return res.status(400).end("Error uploading file.");
+            return res.status(400).end("Error uploading file." + err);
         }
         res.status(200).end("File is uploaded");
     });
