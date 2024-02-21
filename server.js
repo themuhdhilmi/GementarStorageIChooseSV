@@ -4,6 +4,10 @@ const app = express();
 const path = require('path');
 const fs = require('fs');
 
+app.use(cors({
+    origin: 'http://localhost'
+}));
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/');
