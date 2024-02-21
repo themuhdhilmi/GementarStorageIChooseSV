@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs');
 
 app.use(cors({
-    origin: 'http://localhost'
+    origin: '*'
 }));
 
 const storage = multer.diskStorage({
