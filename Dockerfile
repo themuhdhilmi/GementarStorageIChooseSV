@@ -13,7 +13,10 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Expose port 3002
+# Create a volume for the /uploads folder
+VOLUME /usr/src/app/uploads
+
+# Expose port 3009
 EXPOSE 3009
 
 # Command to run the application
