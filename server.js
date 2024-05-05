@@ -14,12 +14,13 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
-        // Get the fileName from the request body
+
         const fileName = req.body.fileName;
-        // Ensure fileName exists, otherwise use the original file name
         const finalFileName = fileName ? fileName : file.originalname;
-        // Append .pdf extension
-        cb(null, finalFileName + '.pdf');
+        const ext = path.extname(file.originalname);
+        const finalFileNameWithExt = finalFileName + ext;
+
+        cb(null, finalFileNameWithExt);
     }
 });
 
@@ -34,7 +35,12 @@ app.post('/gementar/storage/upload', (req,res) => {
         if(err) {
             return res.status(400).end("Error uploading file." + err);
         }
-        res.status(200).end("File is uploaded");
+
+        const uploadedFileName = req.file.filename;
+        const jsonData = {
+            path : '/gementar/storage/file/' + uploadedFileName
+        }
+        res.status(200).setHeader('Content-Type', 'application/json').end(JSON.stringify(jsonData, null, 3));
     });
 });
 
@@ -55,7 +61,7 @@ app.get('/gementar/storage/file/:filename', (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3009;
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
